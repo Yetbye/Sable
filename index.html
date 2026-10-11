@@ -35,10 +35,15 @@ body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-
 img{display:block;max-width:100%}
 a{color:inherit}
 /* 噪点颗粒层 */
-.grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:90;pointer-events:none;opacity:.055;
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.055;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
   animation:grain-shift 8s steps(10) infinite}
-@keyframes grain-shift{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}}
+@keyframes grain-shift{
+  0%,100%{background-position:0 0}
+  20%{background-position:-9px 6px}
+  40%{background-position:6px -9px}
+  60%{background-position:-6px -6px}
+  80%{background-position:9px 9px}}
 /* 导航 */
 .nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:space-between;align-items:center;
   padding:16px clamp(18px,5vw,56px);border-bottom:1px solid transparent;transition:background .4s var(--ease),border-color .4s var(--ease)}
@@ -236,6 +241,7 @@ a{color:inherit}
   .nav-links a{font-size:.74rem;letter-spacing:.14em}
   .nav-mark{font-size:1.02rem}
   .big-vert{font-size:2rem;margin-right:0}
+  .tag{flex:1 1 auto;text-align:center}
 }
 </style>
 </head>
