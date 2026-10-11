@@ -228,7 +228,7 @@ a{color:inherit}
     <a href="#poem">诗篇</a>
     <a href="#hackathon">黑客松</a>
     <a href="#papers">论文</a>
-    <a href="#projects">项目</a>
+    <a href="#lab">实验室</a>
     <a class="gh-ico" href="https://github.com/yetbye" target="_blank" rel="noopener" aria-label="GitHub">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
     </a>
@@ -239,11 +239,11 @@ a{color:inherit}
 <header class="hero" id="top">
   <div class="hero-bg"><img src="assets/hero.jpg" alt="淡墨山水，小亭新月"></div>
   <div class="hero-veil"></div>
-  <div class="hero-side">南屏影小　小楼风诉画角</div>
+  <div class="hero-side">孤光自照　肝胆皆冰雪</div>
   <div class="hero-inner">
     <div class="hero-label">Portfolio · 2026</div>
     <h1 class="hero-title">sable</h1>
-    <p class="hero-sub">计算机视觉方向博士研究生，研究<strong>实时视觉语言模型、全景感知与仿生视觉</strong>。工作之外写诗，也在黑客松里把想法做成完整产品。</p>
+    <p class="hero-sub">在南方海滨做研究，白日与全景相机和实时模型打交道，夜里读诗写字。清冷于我不是疏离——是<strong>先把自己照清楚，再去看世界</strong>。</p>
     <div class="hero-meta">
       <span><i>CV</i>　博士在读</span>
       <span><i>研究</i>　实时多模态交互</span>
@@ -373,110 +373,15 @@ a{color:inherit}
       <div class="fl-url">yetbye.github.io/rsi-guide</div>
       <span class="fl-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
     </a>
-
-    <div class="paper-grid">
-      <div class="paper-card rv rv-d1">
-        <span class="conf">ACL 2026 MAIN</span>
-        <h4>MM-Mem</h4>
-        <p>From Verbatim to Gist：多模态记忆从逐字记录到要义提炼。</p>
-        <div class="lock">未公开草稿</div>
-      </div>
-      <div class="paper-card rv rv-d1">
-        <span class="conf">ARXIV 2026 · V0.1</span>
-        <h4>Wan-Streamer</h4>
-        <p>End-to-end Real-time Interactive Foundation Models：端到端实时交互基座。</p>
-        <div class="lock">未公开草稿</div>
-      </div>
-      <div class="paper-card rv rv-d2">
-        <span class="conf">ARXIV 2026 · V0.2</span>
-        <h4>Wan-Streamer v0.2</h4>
-        <p>Higher Resolution, Same Latency：更高分辨率，同等延迟。</p>
-        <div class="lock">未公开草稿</div>
-      </div>
-      <div class="paper-card rv rv-d2">
-        <span class="conf">ARXIV 2026 · V0.3</span>
-        <h4>Wan-Streamer v0.3</h4>
-        <p>Video = World + Event Stream：视频即世界模型与事件流。</p>
-        <div class="lock">未公开草稿</div>
-      </div>
-      <div class="paper-card rv rv-d3">
-        <span class="conf">ARXIV 2603.25716</span>
-        <h4>HyDRA</h4>
-        <p>Out of Sight but Not Out of Mind：动态视频世界模型的混合记忆。</p>
-        <div class="lock">未公开草稿</div>
-      </div>
-    </div>
   </div>
 </section>
 
-<!-- ===== 项目与示意图 ===== -->
-<section class="section" id="projects">
+<!-- ===== 实验室（内容待补） ===== -->
+<section class="section" id="lab">
   <div class="container">
     <div class="sec-head rv">
-      <span class="sec-index">肆 · PROJECTS</span>
-      <h2 class="sec-title">项目与示意图</h2>
-      <p class="sec-note">研究相关的工程项目；示意图展示数据在系统中的流动路径。</p>
-    </div>
-
-    <!-- JAVIS -->
-    <div class="proj-block rv">
-      <div class="proj-head">
-        <h3>JAVIS · 实时视觉助手</h3>
-        <div class="p-en">REAL-TIME VISION-LANGUAGE ASSISTANT</div>
-        <p>基于影石 X4 Air 全景相机与 qwen-omni 实时模型的视觉语音助手。通过零编译 SDK 桥接获取全景画面，在消费级硬件上本地运行。</p>
-      </div>
-      <div class="flow">
-        <div class="node"><h4><span class="idx">01</span>X4 Air 相机</h4><p>双鱼眼 1664×832 实时预览，USB 直连</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">02</span>Camera SDK</h4><p>WinUSB 绑定，驱动官方 Demo 产出 H.264 码流</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">03</span>PyAV 解码</h4><p>双鱼眼帧解码，dewarp 展开为 768×576 全景</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">04</span>mediamtx / RTSP</h4><p>桥接为本地 RTSP，webui 零改动消费</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">05</span>实时大模型</h4><p>qwen-omni-realtime，图像帧在音频帧之后送入</p></div>
-      </div>
-      <p class="flow-caption">SDK 路 90 帧测试通过 ／ WebRTC 路 60 帧测试通过</p>
-    </div>
-
-    <!-- FLYEYE -->
-    <div class="proj-block rv">
-      <div class="proj-head">
-        <h3>FLYEYE · 果蝇复眼体验器</h3>
-        <div class="p-en">DROSOPHILA COMPOUND-EYE EXPERIENCE</div>
-        <p>基于双鱼眼全景的果蝇复眼视觉体验：360° 全景控制、小眼 mosaic 视图与运动通道，并为果蝇全脑连接组（FlyWire, Nature 2024）预留分层接口。</p>
-      </div>
-      <div class="flow">
-        <div class="node"><h4><span class="idx">01</span>双鱼眼原流</h4><p>复用 SdkPreviewTrack，取背对背双鱼眼原流</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">02</span>球面拼接</h4><p>等距几何 remap 拼出完整球面，无需 GPU</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">03</span>透视取样</h4><p>Fibonacci 小眼轴分布，约 800 小眼</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">04</span>复眼渲染</h4><p>mosaic 视图 + 逐小眼亮度差运动通道</p></div>
-        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
-        <div class="node"><h4><span class="idx">05</span>连接组接口</h4><p>方向选择性与自运动估计，预留 FlyWire 对接</p></div>
-      </div>
-      <p class="flow-caption">26 项单元测试通过 ／ bench 硬指标 ≥ 15 fps</p>
-    </div>
-
-    <!-- 支撑模块 -->
-    <div class="proj-mini">
-      <div class="mini-card rv rv-d1">
-        <span class="m-en">REPRODUCTION</span>
-        <h4>Wan-Streamer 复现</h4>
-        <p>encoders / transformer / attention / flow-matching / decoders 全模块复现，含 serving 与 training 骨架。</p>
-      </div>
-      <div class="mini-card rv rv-d2">
-        <span class="m-en">INTERFACE</span>
-        <h4>live-vlm-webui</h4>
-        <p>可插拔视频源（UVC / SDK / RTSP）的实时 VLM 交互界面，本地运行。</p>
-      </div>
-      <div class="mini-card rv rv-d3">
-        <span class="m-en">BRIDGE</span>
-        <h4>Insta360 SDK 桥</h4>
-        <p>CameraSDK 2.2 + MediaSDK 3.1 + mediamtx，管道式零编译集成。</p>
-      </div>
+      <span class="sec-index">肆 · LAB</span>
+      <h2 class="sec-title">实验室</h2>
     </div>
   </div>
 </section>
