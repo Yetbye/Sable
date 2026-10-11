@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sable · 作品集</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23121417'/%3E%3Ccircle cx='15' cy='14' r='8' fill='none' stroke='%238d939c' stroke-width='1.4'/%3E%3Ccircle cx='18.5' cy='10.5' r='7' fill='%23121417'/%3E%3Ccircle cx='24' cy='24' r='2' fill='%238a4a44'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Ma+Shan+Zheng&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   SABLE — 灰冷侘寂设计系统
+   Base 继承 Venus 排版/间距/动效协议；Palette 为冷灰残红定制
+   ============================================================ */
+:root{
+  /* Paper — 冷灰黑底 */
+  --bg-primary:#121417; --bg-secondary:#181b20; --bg-tertiary:#262b32; --ink-black:#0c0d10;
+  /* Ink — 褪色冷灰 */
+  --text-primary:#c9ccd1; --text-secondary:#8d939c; --text-muted:#5d646e;
+  /* Chromatic — 青灰 / 板岩 */
+  --color-primary:#8a918c; --color-secondary:#5a6470; --color-tertiary:#3a4149;
+  /* Accent — 干涸朱红 / 残金 */
+  --accent-red:#8a4a44; --accent-gold:#978a6e;
+  /* Base 常量 */
+  --font-display:'Noto Serif SC','Playfair Display',Georgia,serif;
+  --font-body:'Noto Sans SC',-apple-system,sans-serif;
+  --font-hand:'Ma Shan Zheng',cursive;
+  --font-mono:'JetBrains Mono','Fira Code',monospace;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary);
+  font-size:16px;line-height:1.8;font-weight:300;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent-red);color:#e8e6e3}
+img{display:block;max-width:100%}
+a{color:inherit}
+/* 噪点颗粒层 */
+.grain{position:fixed;inset:-50%;width:200%;height:200%;z-index:90;pointer-events:none;opacity:.055;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  animation:grain-shift 8s steps(10) infinite}
+@keyframes grain-shift{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}}
+/* 导航 */
+.nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;justify-content:space-between;align-items:center;
+  padding:16px clamp(18px,5vw,56px);border-bottom:1px solid transparent;transition:background .4s var(--ease),border-color .4s var(--ease)}
+.nav.scrolled{background:rgba(18,20,23,.84);backdrop-filter:blur(12px);border-bottom-color:var(--bg-tertiary)}
+.nav-mark{font-family:var(--font-display);font-weight:700;font-size:1.2rem;letter-spacing:.4em;text-decoration:none;color:var(--text-primary)}
+.nav-links{display:flex;align-items:center;gap:clamp(14px,3vw,38px)}
+.nav-links a{color:var(--text-secondary);text-decoration:none;font-size:.82rem;letter-spacing:.22em;position:relative;padding:4px 0;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--accent-red);
+  transform:scaleX(0);transform-origin:right;transition:transform .45s var(--ease)}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-links a:hover::after{transform:scaleX(1);transform-origin:left}
+.gh-ico{display:flex;align-items:center}
+.gh-ico svg{width:19px;height:19px;stroke:var(--text-secondary);transition:stroke .3s,transform .3s var(--ease)}
+.gh-ico:hover svg{stroke:var(--text-primary);transform:translateY(-2px)}
+/* Hero */
+.hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 32%;
+  filter:grayscale(.35) brightness(.7);transform:scale(1.07);animation:hero-drift 26s ease-in-out infinite alternate}
+@keyframes hero-drift{from{transform:scale(1.07) translate(0,0)}to{transform:scale(1.14) translate(-1.5%,1%)}}
+.hero-veil{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(180deg,rgba(12,13,16,.78) 0%,rgba(12,13,16,.32) 42%,rgba(18,20,23,.6) 72%,var(--bg-primary) 100%),
+  linear-gradient(90deg,rgba(12,13,16,.72) 0%,rgba(12,13,16,.1) 55%)}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;
+  padding:0 clamp(18px,5vw,56px);padding-bottom:clamp(86px,13vh,150px)}
+.hero-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.42em;color:var(--text-muted);
+  text-transform:uppercase;margin-bottom:26px;opacity:0;animation:fade-up .9s var(--ease) .2s forwards}
+.hero-title{font-family:var(--font-display);font-weight:700;font-size:clamp(4.2rem,15vw,11.5rem);
+  line-height:.95;letter-spacing:.06em;color:var(--text-primary);opacity:0;animation:fade-up 1.1s var(--ease) .4s forwards}
+.hero-sub{margin-top:30px;max-width:560px;color:var(--text-secondary);font-size:clamp(.92rem,1.35vw,1.08rem);
+  font-weight:300;opacity:0;animation:fade-up 1s var(--ease) .7s forwards}
+.hero-sub strong{color:var(--text-primary);font-weight:500}
+.hero-meta{margin-top:38px;display:flex;gap:clamp(16px,3vw,34px);flex-wrap:wrap;opacity:0;animation:fade-up 1s var(--ease) .95s forwards}
+.hero-meta span{font-size:.72rem;letter-spacing:.24em;color:var(--text-muted)}
+.hero-meta i{font-style:normal;color:var(--accent-red)}
+.hero-side{position:absolute;right:clamp(20px,3.5vw,46px);top:50%;transform:translateY(-50%);z-index:2;
+  writing-mode:vertical-rl;font-family:var(--font-display);color:var(--text-muted);letter-spacing:.65em;font-size:.86rem;opacity:.65}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;color:var(--text-muted);
+  font-family:var(--font-mono);font-size:.66rem;letter-spacing:.38em;display:flex;flex-direction:column;align-items:center;gap:10px}
+.scroll-hint::after{content:'';width:1px;height:46px;background:linear-gradient(var(--text-muted),transparent);animation:scroll-line 2.2s var(--ease) infinite}
+@keyframes scroll-line{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@keyframes fade-up{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+/* 通用 section */
+.section{position:relative;padding:clamp(90px,14vh,160px) 0}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(18px,5vw,56px)}
+.sec-head{margin-bottom:clamp(46px,7vh,84px);display:flex;flex-direction:column;gap:14px}
+.sec-index{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.42em;color:var(--accent-red);text-transform:uppercase}
+.sec-title{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,3.3rem);font-weight:700;letter-spacing:.1em}
+.sec-note{color:var(--text-muted);max-width:540px;font-size:.9rem;font-weight:300}
+/* 诗篇 */
+.poem-wrap{display:grid;grid-template-columns:1fr;gap:46px;align-items:center}
+@media(min-width:900px){.poem-wrap{grid-template-columns:1.05fr .95fr;gap:clamp(40px,6vw,96px)}}
+.poem-figure{position:relative}
+.poem-figure img{width:100%;filter:grayscale(.25) brightness(.86)}
+.poem-figure .frame{position:absolute;inset:14px;border:1px solid rgba(201,204,209,.22);pointer-events:none}
+.poem-figure figcaption{margin-top:14px;font-size:.74rem;letter-spacing:.24em;color:var(--text-muted)}
+.poem-card{position:relative}
+.poem-name{font-family:var(--font-display);font-size:1.35rem;letter-spacing:.32em;margin-bottom:14px}
+.poem-name small{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.3em;color:var(--text-muted);margin-left:14px}
+.poem-columns{display:flex;flex-direction:row;gap:clamp(14px,2.4vw,30px);writing-mode:vertical-rl;
+  height:clamp(330px,50vw,500px);font-family:var(--font-display);font-size:clamp(1.02rem,1.7vw,1.3rem);
+  letter-spacing:.38em;line-height:2.15;color:var(--text-primary);margin-top:30px}
+.poem-columns p{padding-inline-start:clamp(14px,2.4vw,30px);border-inline-start:1px solid var(--bg-tertiary)}
+.poem-columns .em{color:var(--accent-red)}
+.seal{margin-top:34px;display:inline-flex;align-items:center;gap:14px;color:var(--text-muted);font-size:.72rem;letter-spacing:.26em}
+.seal-mark{width:34px;height:34px;background:var(--accent-red);color:#e8e6e3;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-size:1rem;transform:rotate(-4deg)}
+/* 间章 · 崩塌 */
+.interlude{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:var(--ink-black)}
+.interlude-img{position:absolute;inset:0;z-index:0}
+.interlude-img img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.62)}
+.interlude-veil{position:absolute;inset:0;z-index:1;background:
+  linear-gradient(90deg,rgba(12,13,16,.55) 0%,rgba(12,13,16,.72) 45%,rgba(12,13,16,.92) 100%)}
+@media(min-width:900px){
+  .interlude-img img{object-position:30% center}
+  .interlude-veil{background:linear-gradient(90deg,rgba(12,13,16,.2) 35%,rgba(12,13,16,.9) 68%)}
+}
+.interlude-inner{position:relative;z-index:2;width:100%;max-width:1200px;margin:0 auto;
+  padding:0 clamp(18px,5vw,56px);display:flex;justify-content:flex-end}
+.interlude-text{max-width:560px;padding-block:90px}
+.interlude-tag{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.42em;color:var(--accent-red);text-transform:uppercase}
+.big-vert{writing-mode:vertical-rl;font-family:var(--font-hand);font-size:clamp(2.4rem,5.5vw,4.2rem);
+  letter-spacing:.32em;color:var(--text-secondary);float:right;margin:0 0 26px 30px;line-height:1.5}
+.interlude-text p{color:var(--text-secondary);font-size:.95rem;font-weight:300;margin-top:18px;clear:both}
+.interlude-text p strong{color:var(--text-primary);font-weight:500}
+/* 黑客松海报 */
+.poster-item{display:grid;grid-template-columns:1fr;gap:38px;align-items:center;margin-bottom:clamp(72px,10vh,120px)}
+.poster-item:last-child{margin-bottom:0}
+@media(min-width:900px){.poster-item{grid-template-columns:.85fr 1.15fr;gap:clamp(40px,6vw,96px)}
+  .poster-item.flip .poster-figure{order:2}}
+.poster-figure{position:relative;padding:16px}
+.poster-figure img{width:100%;border:1px solid var(--bg-tertiary)}
+.poster-figure .corner{position:absolute;width:22px;height:22px;border-color:var(--accent-red);border-style:solid;opacity:.85}
+.poster-figure .c-tl{top:0;left:0;border-width:1px 0 0 1px}
+.poster-figure .c-tr{top:0;right:0;border-width:1px 1px 0 0}
+.poster-figure .c-bl{bottom:0;left:0;border-width:0 0 1px 1px}
+.poster-figure .c-br{bottom:0;right:0;border-width:0 1px 1px 0}
+.poster-en{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.26em;color:var(--text-muted);margin-bottom:12px}
+.poster-body h3{font-family:var(--font-display);font-size:clamp(1.7rem,3vw,2.5rem);font-weight:700;letter-spacing:.1em}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.tag{border:1px solid var(--bg-tertiary);color:var(--text-secondary);font-size:.72rem;letter-spacing:.16em;padding:5px 13px}
+.poster-quote{font-family:var(--font-display);color:var(--color-primary);border-inline-start:2px solid var(--accent-red);
+  padding-inline-start:18px;margin:24px 0;letter-spacing:.16em;font-size:1.02rem}
+.poster-desc{color:var(--text-secondary);font-weight:300;margin-bottom:26px;font-size:.94rem}
+.feat-list{list-style:none;display:grid;gap:13px}
+.feat-list li{display:flex;gap:14px;align-items:baseline;color:var(--text-secondary);font-size:.9rem}
+.feat-list .n{font-family:var(--font-mono);color:var(--accent-red);font-size:.74rem;flex:0 0 auto}
+.feat-list strong{color:var(--text-primary);font-weight:500}
+/* 论文解读 */
+.papers-banner{position:relative;margin-bottom:40px}
+.papers-banner img{width:100%;filter:grayscale(.3) brightness(.72)}
+.papers-banner .frame{position:absolute;inset:14px;border:1px solid rgba(201,204,209,.2);pointer-events:none}
+.featured-link{display:block;position:relative;border:1px solid var(--bg-tertiary);
+  background:linear-gradient(135deg,var(--bg-secondary),var(--bg-primary));
+  padding:clamp(30px,4.5vw,54px);text-decoration:none;overflow:hidden;
+  transition:transform .5s var(--ease),border-color .5s var(--ease),box-shadow .5s var(--ease)}
+.featured-link:hover{border-color:var(--accent-red);transform:translateY(-6px);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.featured-link .fl-tag{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.34em;color:var(--accent-gold);text-transform:uppercase}
+.featured-link h3{font-family:var(--font-display);font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:700;letter-spacing:.08em;margin:14px 0 12px}
+.featured-link p{color:var(--text-secondary);font-size:.92rem;font-weight:300;max-width:680px}
+.featured-link .fl-url{margin-top:22px;font-family:var(--font-mono);font-size:.78rem;color:var(--accent-red);letter-spacing:.08em}
+.featured-link .fl-arrow{position:absolute;top:clamp(28px,4vw,50px);right:clamp(28px,4vw,50px);
+  width:42px;height:42px;border:1px solid var(--bg-tertiary);display:flex;align-items:center;justify-content:center;
+  transition:background .4s,border-color .4s,transform .4s var(--ease)}
+.featured-link .fl-arrow svg{width:16px;height:16px;stroke:var(--text-secondary)}
+.featured-link:hover .fl-arrow{background:var(--accent-red);border-color:var(--accent-red);transform:rotate(45deg)}
+.featured-link:hover .fl-arrow svg{stroke:#e8e6e3}
+.fl-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--bg-tertiary);
+  border:1px solid var(--bg-tertiary);margin-top:30px}
+@media(min-width:640px){.fl-stats{grid-template-columns:repeat(4,1fr)}}
+.fl-stats div{background:var(--bg-secondary);padding:20px 18px}
+.fl-stats b{display:block;font-family:var(--font-display);font-size:1.7rem;font-weight:700;color:var(--text-primary)}
+.fl-stats span{font-size:.72rem;letter-spacing:.2em;color:var(--text-muted)}
+.paper-grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:26px}
+@media(min-width:768px){.paper-grid{grid-template-columns:repeat(3,1fr)}}
+.paper-card{border:1px solid var(--bg-tertiary);background:var(--bg-secondary);padding:24px;min-width:0;
+  transition:border-color .4s,transform .4s var(--ease)}
+.paper-card:hover{border-color:var(--color-secondary);transform:translateY(-5px)}
+.paper-card .conf{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.18em;color:var(--accent-gold)}
+.paper-card h4{font-family:var(--font-display);font-size:1.06rem;letter-spacing:.06em;margin:12px 0 8px;font-weight:600}
+.paper-card p{font-size:.82rem;color:var(--text-muted);line-height:1.7}
+.paper-card .lock{font-size:.68rem;letter-spacing:.22em;color:var(--text-muted);margin-top:16px;
+  border-top:1px solid var(--bg-tertiary);padding-top:12px}
+/* 项目示意图 */
+.proj-block{margin-bottom:clamp(80px,12vh,140px)}
+.proj-block:last-of-type{margin-bottom:0}
+.proj-head h3{font-family:var(--font-display);font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:700;letter-spacing:.1em}
+.proj-head .p-en{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.3em;color:var(--text-muted);margin-top:8px}
+.proj-head p{color:var(--text-secondary);font-size:.92rem;font-weight:300;margin-top:14px;max-width:760px}
+.flow{display:flex;flex-direction:column;gap:14px;margin-top:34px}
+@media(min-width:880px){.flow{flex-direction:row;align-items:stretch}}
+.node{flex:1;min-width:0;border:1px solid var(--bg-tertiary);background:var(--bg-secondary);padding:20px 18px;
+  transition:border-color .4s var(--ease)}
+.node:hover{border-color:var(--accent-red)}
+.node h4{font-family:var(--font-display);font-size:.96rem;letter-spacing:.12em;color:var(--text-primary);
+  margin-bottom:9px;display:flex;gap:10px;align-items:baseline}
+.node h4 .idx{font-family:var(--font-mono);font-size:.68rem;color:var(--accent-red)}
+.node p{font-size:.78rem;color:var(--text-muted);line-height:1.7}
+.arrow{display:flex;align-items:center;justify-content:center;color:var(--color-secondary);flex:0 0 auto}
+.arrow svg{width:20px;height:20px;stroke:currentColor}
+@media(min-width:880px){.arrow svg{transform:rotate(-90deg)}}
+.flow-caption{margin-top:18px;font-size:.76rem;color:var(--text-muted);letter-spacing:.12em}
+.proj-mini{display:grid;grid-template-columns:1fr;gap:16px;margin-top:clamp(60px,9vh,100px)}
+@media(min-width:880px){.proj-mini{grid-template-columns:repeat(3,1fr)}}
+.proj-mini .mini-card{border:1px solid var(--bg-tertiary);padding:26px;background:var(--bg-secondary);min-width:0;
+  transition:border-color .4s,transform .4s var(--ease)}
+.proj-mini .mini-card:hover{border-color:var(--color-secondary);transform:translateY(-5px)}
+.mini-card h4{font-family:var(--font-display);font-size:1.08rem;letter-spacing:.1em;margin-bottom:10px}
+.mini-card .m-en{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.22em;color:var(--accent-gold)}
+.mini-card p{font-size:.82rem;color:var(--text-muted);margin-top:10px;line-height:1.7}
+/* 页脚 */
+.footer{border-top:1px solid var(--bg-tertiary);background:var(--ink-black);padding:clamp(60px,9vh,96px) 0 36px}
+.footer-grid{display:flex;justify-content:space-between;gap:36px;flex-wrap:wrap}
+.footer h3{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.34em;font-weight:700}
+.footer .f-line{color:var(--text-muted);font-size:.86rem;margin-top:14px;letter-spacing:.14em;font-weight:300}
+.footer-links{display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.footer-links a{color:var(--text-secondary);text-decoration:none;font-size:.86rem;letter-spacing:.18em;
+  border-bottom:1px solid transparent;transition:color .3s,border-color .3s}
+.footer-links a:hover{color:var(--text-primary);border-bottom-color:var(--accent-red)}
+.footer-bottom{margin-top:54px;padding-top:24px;border-top:1px solid var(--bg-tertiary);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  font-size:.7rem;letter-spacing:.22em;color:var(--text-muted)}
+/* 滚动揭示 */
+.rv{opacity:0;transform:translateY(30px);transition:opacity .95s var(--ease),transform .95s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv-d1{transition-delay:.1s}.rv-d2{transition-delay:.2s}.rv-d3{transition-delay:.3s}.rv-d4{transition-delay:.4s}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .grain,.hero-bg img,.scroll-hint::after{animation:none!important}
+  .hero-label,.hero-title,.hero-sub,.hero-meta{opacity:1;transform:none;animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+}
+@media(max-width:560px){
+  .hero-side{display:none}
+  .nav-links a{font-size:.74rem;letter-spacing:.14em}
+  .nav-mark{font-size:1.02rem}
+  .big-vert{font-size:2rem;margin-right:0}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<!-- ===== 导航 ===== -->
+<nav class="nav" id="nav">
+  <a class="nav-mark" href="#top">SABLE</a>
+  <div class="nav-links">
+    <a href="#poem">诗篇</a>
+    <a href="#hackathon">黑客松</a>
+    <a href="#papers">论文</a>
+    <a href="#projects">项目</a>
+    <a class="gh-ico" href="https://github.com/yetbye" target="_blank" rel="noopener" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero" id="top">
+  <div class="hero-bg"><img src="assets/hero.jpg" alt="残山剩水，废亭残月"></div>
+  <div class="hero-veil"></div>
+  <div class="hero-side">南屏影小　小楼风诉画角</div>
+  <div class="hero-inner">
+    <div class="hero-label">Portfolio · 作品集 · MMXXVI</div>
+    <h1 class="hero-title">sable</h1>
+    <p class="hero-sub">视觉研究者的暗面卷宗。以冷灰为底色，收纳<strong>诗篇、黑客松产品、论文深读与工程残骸</strong>——一场关于压抑、执念与精神崩塌的视觉盛宴。</p>
+    <div class="hero-meta">
+      <span><i>壹</i>　诗篇 · 南屏影小</span>
+      <span><i>贰</i>　BOLD MAKER 2026</span>
+      <span><i>叁</i>　RSI · 十二卷</span>
+      <span><i>肆</i>　JAVIS / FLYEYE</span>
+    </div>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</header>
+
+<!-- ===== 诗篇 ===== -->
+<section class="section" id="poem">
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="sec-index">壹 · VERSES</span>
+      <h2 class="sec-title">诗篇</h2>
+      <p class="sec-note">字是未寄出的执念，落在纸上，便长成了青苔。</p>
+    </div>
+    <div class="poem-wrap">
+      <figure class="poem-figure rv rv-d1">
+        <img src="assets/poem.jpg" alt="苔井、秋千、柳烟与新月">
+        <span class="frame"></span>
+        <figcaption>苔井煎梨点点 · 新月浸花朝</figcaption>
+      </figure>
+      <div class="poem-card rv rv-d2">
+        <div class="poem-name">《南屏影小》<small>CI · 无据</small></div>
+        <div class="poem-columns">
+          <p>南屏影小，小楼风诉画角。</p>
+          <p>柳吐烟生昨梦遥，新月浸花朝。</p>
+          <p>妆冷静倚秋千，</p>
+          <p><span class="em">无期</span>定面花间。</p>
+          <p>苔井煎梨点点，</p>
+          <p>又说燕落筝偏。</p>
+        </div>
+        <div class="seal"><span class="seal-mark">寂</span>一场旧梦，无据可查</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 间章 · 精神崩塌 ===== -->
+<section class="interlude" id="interlude">
+  <div class="interlude-img"><img src="assets/collapse.jpg" alt="无面之人正在崩解为墨"></div>
+  <div class="interlude-veil"></div>
+  <div class="interlude-inner">
+    <div class="interlude-text rv">
+      <span class="interlude-tag">間 · INTERLUDE</span>
+      <div class="big-vert">执念如山　崩塌如墨</div>
+      <p>这里不陈列成功。那些在深夜里反复推翻的公式、没有回音的对话、和一封封写给自己的信，构成了作品集真正的地基。</p>
+      <p><strong>灰不是结束——是所有颜色燃尽之后，剩下的东西。</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 黑客松 ===== -->
+<section class="section" id="hackathon">
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="sec-index">贰 · HACKATHONS</span>
+      <h2 class="sec-title">黑客松</h2>
+      <p class="sec-note">四十八小时的执念，压缩成一张纸。</p>
+    </div>
+
+    <!-- PanoDuck -->
+    <article class="poster-item rv">
+      <figure class="poster-figure">
+        <img src="assets/panoduck.png" alt="全景鸭先知 PanoDuck 黑客松海报">
+        <span class="corner c-tl"></span><span class="corner c-tr"></span>
+        <span class="corner c-bl"></span><span class="corner c-br"></span>
+      </figure>
+      <div class="poster-body">
+        <div class="poster-en">PANODUCK · BOLD MAKER 2026 · 影石 INSTA360</div>
+        <h3>全景鸭先知</h3>
+        <div class="tag-row">
+          <span class="tag">AI + 影像</span><span class="tag">全景感知</span>
+          <span class="tag">视障辅助</span><span class="tag">本地部署</span>
+        </div>
+        <p class="poster-quote">春江水暖鸭先知，家中全景我先知。</p>
+        <p class="poster-desc">一只骑家用陪伴机器人，为居家生活的视力障碍者解决「我想知道的那件事，在我家的哪个方向」——不用举着手机对准，也不用听它把整个房间念一遍。三场视障人士深度访谈与四十三份问卷，指向同一个被忽视的结论：家里，才是现有方案最薄弱的地方。</p>
+        <ul class="feat-list">
+          <li><span class="n">01</span><span><strong>全景感知</strong>　全景相机一直在看，实时理解整个房间，而非被动应答</span></li>
+          <li><span class="n">02</span><span><strong>主动开口</strong>　AI 主动发现并询问你可能关心的事，难题任务也能托出</span></li>
+          <li><span class="n">03</span><span><strong>实时理解</strong>　JoyAI-VL 8B 模型实时解析视频流，延迟可感</span></li>
+          <li><span class="n">04</span><span><strong>本地部署</strong>　完整落地本地 A100 集群，隐私不出户</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- 辩妆直播间 -->
+    <article class="poster-item flip rv">
+      <figure class="poster-figure">
+        <img src="assets/bianzhuang.jpg" alt="辩妆直播间黑客松海报">
+        <span class="corner c-tl"></span><span class="corner c-tr"></span>
+        <span class="corner c-bl"></span><span class="corner c-br"></span>
+      </figure>
+      <div class="poster-body">
+        <div class="poster-en">BEAUTY DEBATE · MULTI-AGENT LIVESTREAM</div>
+        <h3>辩妆直播间</h3>
+        <div class="tag-row">
+          <span class="tag">多智能体</span><span class="tag">美妆种草</span>
+          <span class="tag">抖音生态</span><span class="tag">购买决策</span>
+        </div>
+        <p class="poster-quote">让种草更快，让决策更准。</p>
+        <p class="poster-desc">面向已被内容种草、却还没完成购买决策的美妆用户。构建美妆博主种草视频的知识库与数字分身，用户按标签选择与自身需求接近的博主，进行多 Agent 辩论对话，形成个性化购买决策——在信息过载的时代，不再帮用户找更多，而是帮用户选更对。</p>
+        <ul class="feat-list">
+          <li><span class="n">01</span><span><strong>发起提问</strong>　支持语音输入与拍照问妆，智能补光精准识别</span></li>
+          <li><span class="n">02</span><span><strong>原理科普</strong>　先懂肤质，再对照合适产品，低风险可立即结论</span></li>
+          <li><span class="n">03</span><span><strong>博主匹配</strong>　精选进入辩论环节的博主，拟人式对话</span></li>
+          <li><span class="n">04</span><span><strong>多博主辩论</strong>　多维度辨证，为你挑最合适的产品</span></li>
+          <li><span class="n">05</span><span><strong>下单购买</strong>　跳转抖音商城点击即下单，闭环不中断</span></li>
+        </ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===== 论文解读 ===== -->
+<section class="section" id="papers">
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="sec-index">叁 · READING NOTES</span>
+      <h2 class="sec-title">论文解读</h2>
+      <p class="sec-note">我不写摘要——我陪论文走完它自己的逻辑，再记下它自相矛盾的地方。</p>
+    </div>
+
+    <figure class="papers-banner rv">
+      <img src="assets/papers.jpg" alt="废墟般的侘寂书斋">
+      <span class="frame"></span>
+    </figure>
+
+    <a class="featured-link rv" href="https://yetbye.github.io/rsi-guide" target="_blank" rel="noopener">
+      <span class="fl-tag">FEATURED · GITHUB PAGES</span>
+      <h3>RSI 深读指南 · 自改进之路</h3>
+      <p>读 RSI（递归自改进）方向的深度笔记：新知识该住在哪里——上下文、权重、生成器、在线状态，还是测试时的梯度？十二篇论文，一条从模型编辑走到测试时训练的路。每篇拆公式、逐表读数，把读到的矛盾与还想追的问题，一并写下。</p>
+      <div class="fl-stats">
+        <div><b>12</b><span>篇论文深读</span></div>
+        <div><b>157</b><span>个章节</span></div>
+        <div><b>45+</b><span>组内联图表</span></div>
+        <div><b>5</b><span>大容器谱系</span></div>
+      </div>
+      <div class="fl-url">yetbye.github.io/rsi-guide</div>
+      <span class="fl-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+    </a>
+
+    <div class="paper-grid">
+      <div class="paper-card rv rv-d1">
+        <span class="conf">ACL 2026 MAIN</span>
+        <h4>MM-Mem</h4>
+        <p>From Verbatim to Gist：多模态记忆如何从逐字记录走向要义提炼。</p>
+        <div class="lock">未公开 · LOCAL DRAFT</div>
+      </div>
+      <div class="paper-card rv rv-d1">
+        <span class="conf">ARXIV 2026 · V0.1</span>
+        <h4>Wan-Streamer</h4>
+        <p>End-to-end Real-time Interactive Foundation Models：端到端实时交互基座。</p>
+        <div class="lock">未公开 · LOCAL DRAFT</div>
+      </div>
+      <div class="paper-card rv rv-d2">
+        <span class="conf">ARXIV 2026 · V0.2</span>
+        <h4>Wan-Streamer v0.2</h4>
+        <p>Higher Resolution, Same Latency：更高分辨率，同等延迟的工程权衡。</p>
+        <div class="lock">未公开 · LOCAL DRAFT</div>
+      </div>
+      <div class="paper-card rv rv-d2">
+        <span class="conf">ARXIV 2026 · V0.3</span>
+        <h4>Wan-Streamer v0.3</h4>
+        <p>Video = World + Event Stream：视频即世界模型与事件流的合一。</p>
+        <div class="lock">未公开 · LOCAL DRAFT</div>
+      </div>
+      <div class="paper-card rv rv-d3">
+        <span class="conf">ARXIV 2603.25716</span>
+        <h4>HyDRA</h4>
+        <p>Out of Sight but Not Out of Mind：动态视频世界模型的混合记忆。</p>
+        <div class="lock">未公开 · LOCAL DRAFT</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 项目与示意图 ===== -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="sec-head rv">
+      <span class="sec-index">肆 · ENGINEERING</span>
+      <h2 class="sec-title">项目与示意图</h2>
+      <p class="sec-note">从一根 USB 线开始，搭建「看见」与「被听见」的管道。</p>
+    </div>
+
+    <!-- JAVIS -->
+    <div class="proj-block rv">
+      <div class="proj-head">
+        <h3>JAVIS · 实时视觉助手</h3>
+        <div class="p-en">REAL-TIME VISION-LANGUAGE ASSISTANT</div>
+        <p>影石 X4 Air 全景相机 + 百炼 qwen-omni 实时模型，语音与视觉的实时对话。零编译 SDK 桥接，全链路在消费级硬件上跑通。</p>
+      </div>
+      <div class="flow">
+        <div class="node"><h4><span class="idx">01</span>X4 Air 相机</h4><p>双鱼眼 1664×832 实时预览，USB 直连，无需摄像头模式</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">02</span>Camera SDK</h4><p>WinUSB 绑定，菜单盲发驱动官方 Demo 产出 H.264 码流</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">03</span>PyAV 解码</h4><p>双鱼眼帧解码，几何 dewarp 展开为 768×576 全景画面</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">04</span>mediamtx / RTSP</h4><p>码流桥接为本地 RTSP，webui 零改动即可消费</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">05</span>实时大模型</h4><p>qwen-omni-realtime，图像帧必须在音频帧之后送入</p></div>
+      </div>
+      <p class="flow-caption">验证：SDK 路 90 帧测试 PASS ／ WebRTC 路 60 帧测试 PASS</p>
+    </div>
+
+    <!-- FLYEYE -->
+    <div class="proj-block rv">
+      <div class="proj-head">
+        <h3>FLYEYE · 果蝇复眼体验器</h3>
+        <div class="p-en">DROSOPHILA COMPOUND-EYE EXPERIENCE</div>
+        <p>用全景双鱼眼，让人以果蝇的方式「看」世界：360° 全景控制、小眼 mosaic 复眼视图与运动通道，并为果蝇全脑连接组（FlyWire, Nature 2024）预留分层接口。</p>
+      </div>
+      <div class="flow">
+        <div class="node"><h4><span class="idx">01</span>双鱼眼原流</h4><p>复用主项目 SdkPreviewTrack，raw 视图取背对背双鱼眼</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">02</span>球面拼接</h4><p>等距几何 remap 拼出完整球面，无需 GPU 与 MediaSDK</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">03</span>透视取样</h4><p>Fibonacci 小眼轴分布，约 800 小眼，互角 1.4°</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">04</span>复眼渲染</h4><p>mosaic 视图 + 逐小眼亮度差，T4/T5 运动通道意象</p></div>
+        <div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+        <div class="node"><h4><span class="idx">05</span>连接组接口</h4><p>方向选择性与自运动估计，预留 FlyWire 环路对接</p></div>
+      </div>
+      <p class="flow-caption">验证：26 项单元测试通过 ／ bench 硬指标 ≥ 15 fps（科学措辞：均为工程类似物，非生物仿真）</p>
+    </div>
+
+    <!-- 支撑模块 -->
+    <div class="proj-mini">
+      <div class="mini-card rv rv-d1">
+        <span class="m-en">REPRODUCTION</span>
+        <h4>Wan-Streamer 复现</h4>
+        <p>encoders / transformer / attention / flow-matching / decoders 全模块复现，含 serving 与 training 骨架。</p>
+      </div>
+      <div class="mini-card rv rv-d2">
+        <span class="m-en">INTERFACE</span>
+        <h4>live-vlm-webui</h4>
+        <p>可插拔视频源（UVC / SDK / RTSP）的实时 VLM 交互界面，localhost 本地运行。</p>
+      </div>
+      <div class="mini-card rv rv-d3">
+        <span class="m-en">BRIDGE</span>
+        <h4>Insta360 SDK 桥</h4>
+        <p>CameraSDK 2.2 + MediaSDK 3.1 + mediamtx，管道式零编译集成方案。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>sable</h3>
+        <p class="f-line">万物归于灰，灰中仍有字。</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/yetbye" target="_blank" rel="noopener">GitHub · yetbye</a>
+        <a href="https://yetbye.github.io/rsi-guide" target="_blank" rel="noopener">RSI 深读指南 · 十二卷</a>
+        <a href="#top">回到卷首</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SABLE · 作品集</span>
+      <span>南屏影小，小楼风诉画角</span>
+      <span>压抑 · 执念 · 崩塌</span>
+    </div>
+  </div>
+</footer>
+<script>
+(function(){
+  var nav = document.getElementById('nav');
+  var onScroll = function(){
+    if(window.scrollY > 40){ nav.classList.add('scrolled'); }
+    else{ nav.classList.remove('scrolled'); }
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rvEls = document.querySelectorAll('.rv');
+  if(reduce || !('IntersectionObserver' in window)){
+    rvEls.forEach(function(el){ el.classList.add('in'); });
+  }else{
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -8% 0px'});
+    rvEls.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
